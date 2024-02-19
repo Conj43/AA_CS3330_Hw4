@@ -36,7 +36,7 @@ public class VehicleManager {
 			else {
 			long modelYear = Long.parseLong(splitString[3]);
 			double price = Double.parseDouble(splitString[4]);
-			String tempColor = splitString[5].toUpperCase(); //fifth element is the genre, and we convert to upper so we can properly find the ENUM value
+			String tempColor = splitString[5].toUpperCase(); 
 			VehicleColor color = VehicleColor.valueOf(tempColor);
 			String tempFuel = splitString[6].toUpperCase();
 			FuelType fuel = FuelType.valueOf(tempFuel);
@@ -48,8 +48,7 @@ public class VehicleManager {
 			StartMechanism type = StartMechanism.valueOf(tempStart);
 			
 			
-			//here we are looking to see which type of media product we need to create
-			//since each class is subclass of MediaProduct we can create a big array list of type media product and add each product to it to keep track of inventory
+			
 			if(splitString[0].equals("Truck")) { 
 				Truck newTruck = new Truck(splitString[1], splitString[2], modelYear, price, color, fuel, mileage, mass, cylinders, gasTankCapacity, type);
 				vehicleList.add(newTruck);
@@ -84,8 +83,7 @@ public class VehicleManager {
 	
 	
 	
-	//we use generic type T of MediaProduct so we can use this function to print out every element of an array list of any type we have created
-			//this is not the required function, it is just a function to make it easier for us to test our code
+	
 			public <T extends Vehicle> void print(ArrayList<T> vehicle) {
 				int i = 1;
 				for(Vehicle temp : vehicle) {
