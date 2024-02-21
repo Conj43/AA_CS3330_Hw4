@@ -215,6 +215,12 @@ public class VehicleManager {
 		{
 			return null;
 		}
+		
+		//calculates and returns the average fuel efficiency of all SUVs in the vehicle list
+		public double getAverageFuelEfficiencyOfSUVs(double distance, double fuelPrice)
+		{
+			return 0;
+		}
 
 
 
