@@ -139,7 +139,50 @@ public class VehicleManager {
 	}
 	
 	
-	
+	//displays information for all Motor Bikes in vehicle lost
+		public void displayAllMotorBikeInformation() {
+			int count = 0;
+			for(Vehicle vehicle : vehicleList) { //loops through
+				if(vehicle instanceof MotorBike) { //checks if current vehicle is instance of a Motorbike
+					String temp = vehicle.toString(); //use to string to display information
+					System.out.println(temp);
+					count++; //update so we know we found a Motor Bike
+				}
+			}
+			if(count == 0) {
+				System.out.println("Error! There were no Motor Bikes Found!"); //print error if no Motorbikes found
+			}
+		}
+		
+		public void displayVehicleInformation(Vehicle v) {
+		    String temp = v.toString(); //get string representation of the vehicle
+		    if (temp != null) {
+		        System.out.println(temp); //print the vehicle information
+		    } else {
+		        System.out.println("Error! Vehicle not found.");
+		    }
+		}
+			
+		public void displayAllVehicleInformation() {
+		    if (vehicleList.isEmpty()) {
+		        System.out.println("No vehicles found in the inventory.");
+		    } else {
+		        for (Vehicle vehicle : vehicleList) {
+		            System.out.println(vehicle.toString());
+		        }
+		    }
+		}
+
+		public boolean removeVehicle(Vehicle vehicle) { //checks the list of vehicls to see if it contains the speciic vehicle
+		    if (vehicleList.contains(vehicle)) {
+		        vehicleList.remove(vehicle); //if it is found it will remove the vehicle
+		        return true;//returns true if correctly removed
+		    } 
+		    else {
+		        return false;//if not found it will return false
+		    }
+		}
+
 	
 	
 			public <T extends Vehicle> void print(ArrayList<T> vehicle) {
