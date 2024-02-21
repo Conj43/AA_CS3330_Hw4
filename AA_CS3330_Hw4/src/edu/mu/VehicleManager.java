@@ -182,6 +182,41 @@ public class VehicleManager {
 		        return false;//if not found it will return false
 		    }
 		}
+		
+		//calculates the maintenance cost of all vehicles in the fleet
+		//returns the vehicle with the highest maintenance cost
+		//if multiple cars have the same highest maintenance cost it will randomly pick 1 to return
+		public Vehicle getVehicleWithHighestMaintenanceCost(double distance)
+		{
+			return null;
+			
+		}
+		
+		//calculates the maintenance cost of all vehicles in the fleet
+		//returns the vehicle with the lowest maintenance cost
+		//if multiple cars have the same lowest maintenance cost it will randomly pick 1 to return
+		public Vehicle getVehicleWithLowestMaintenanceCost(double distance)
+		{
+			return null;
+		}
+			
+		// finds the car with the highest fuel efficiency
+		//returns an arraylist of either the vehicle with the highest fuel efficiency of an arraylist of the all the vehicles
+		//with the same highest fuel efficiency
+		public ArrayList<Vehicle> getVehicleWithHighestFuelEfficiency(double distance, double fuelPrice)
+		{
+			return null;
+		}
+			
+		// finds the car with the lowest fuel efficiency
+		//returns an arraylist of either the vehicle with the lowest fuel efficiency of an arraylist of the all the vehicles
+		//with the same lowest fuel efficiency
+		public ArrayList<Vehicle> getVehicleWithLowestFuelEfficiency(double distance, double fuelPrice)
+		{
+			return null;
+		}
+
+
 
 	
 	
