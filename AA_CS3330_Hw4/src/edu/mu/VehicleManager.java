@@ -291,7 +291,7 @@ ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep trac
 
 			for(Vehicle vehicle : vehicleList  ) //goes through entire arrL
 			{
-				System.out.println(vehicle.calculateFuelEfficiency(distance, fuelPrice));
+				
 				if(vehicle.calculateFuelEfficiency(distance, fuelPrice) < tempArrL.getFirst().calculateFuelEfficiency(distance, fuelPrice) )
 				{ //if the vehicle FuelE is lower than the vehicle in the tempArrL FuelE it will clear the
 					// ArrL and add the new vehicle as the lowest FuelE
@@ -312,7 +312,23 @@ ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep trac
 		//calculates and returns the average fuel efficiency of all SUVs in the vehicle list
 		public double getAverageFuelEfficiencyOfSUVs(double distance, double fuelPrice)
 		{
-			return 0;
+			
+			double totalSUVFuelE = 0; //make double to store avg fuelE
+			int SUVCount = 0; // count on how many SUVs
+			
+			for(Vehicle vehicle : vehicleList) //goes through each Vehicle
+			{
+				if(vehicle instanceof SUV) //if the vehicle is an suv
+				{
+					SUVCount++; //adds to the count
+					totalSUVFuelE += vehicle.calculateFuelEfficiency(distance, fuelPrice); //adds fuelE to the running total
+					 
+				}
+			}
+			
+			double avgSUVFuelE = totalSUVFuelE / SUVCount;
+			
+			return avgSUVFuelE; //returns the average 
 		}
 
 
