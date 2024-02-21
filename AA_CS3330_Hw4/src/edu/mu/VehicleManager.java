@@ -3,6 +3,7 @@ package edu.mu;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import edu.mu.vehicles.*;
@@ -188,8 +189,33 @@ public class VehicleManager {
 		//if multiple cars have the same highest maintenance cost it will randomly pick 1 to return
 		public Vehicle getVehicleWithHighestMaintenanceCost(double distance)
 		{
-			return null;
+			ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep track of the cars with highest maint cost
 			
+			tempArrL.add(vehicleList.getFirst()); //sets the first as the highest automatically
+			
+			
+			for(Vehicle vehicle : vehicleList  ) //goes through entire arrL
+			{
+				
+				if(vehicle.calculateMaintenaceCost(distance) > tempArrL.getFirst().calculateMaintenaceCost(distance) )
+				{ //if the vehicle maint is higher than the vehicle in the tempArrL maint it will clear the
+					// ArrL and add the new vehicle as the highest maint cost
+					
+					tempArrL.removeAll(tempArrL);
+					tempArrL.add(vehicle);
+				}
+				if(vehicle.calculateMaintenaceCost(distance) == tempArrL.getFirst().calculateMaintenaceCost(distance))
+				{ //if multiple cars have the same maint cost it will add it to the Arrl
+					tempArrL.add(vehicle);
+				}
+				
+			}
+			
+			Random rndm = new Random();
+			
+			Vehicle rtVehicle = tempArrL.get(rndm.nextInt(tempArrL.size())); //chooses randomly one of the cars in the ArrL to return
+			
+			return rtVehicle;
 		}
 		
 		//calculates the maintenance cost of all vehicles in the fleet
