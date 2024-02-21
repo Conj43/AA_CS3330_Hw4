@@ -257,7 +257,27 @@ ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep trac
 		//with the same highest fuel efficiency
 		public ArrayList<Vehicle> getVehicleWithHighestFuelEfficiency(double distance, double fuelPrice)
 		{
-			return null;
+			ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep track of the cars with highest fuel efficiency
+	
+			tempArrL.add(vehicleList.getFirst()); //sets the first as the lowest automatically
+
+			for(Vehicle vehicle : vehicleList  ) //goes through entire arrL
+			{
+				if(vehicle.calculateFuelEfficiency(distance, fuelPrice) > tempArrL.getFirst().calculateFuelEfficiency(distance, fuelPrice) )
+				{ //if the vehicle FuelE is higher than the vehicle in the tempArrL FuelE it will clear the
+					// ArrL and add the new vehicle as the highest FuelE
+					
+					tempArrL.removeAll(tempArrL);
+					tempArrL.add(vehicle);
+				}
+				if(vehicle.calculateFuelEfficiency(distance, fuelPrice) == tempArrL.getFirst().calculateFuelEfficiency(distance, fuelPrice))
+				{ //if multiple cars have the same FuelE it will add it to the Arrl
+					tempArrL.add(vehicle);
+				}
+				
+			}
+			
+			return tempArrL;
 		}
 			
 		// finds the car with the lowest fuel efficiency
