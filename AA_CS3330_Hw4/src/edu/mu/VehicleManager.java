@@ -259,7 +259,7 @@ ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep trac
 		{
 			ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep track of the cars with highest fuel efficiency
 	
-			tempArrL.add(vehicleList.getFirst()); //sets the first as the lowest automatically
+			tempArrL.add(vehicleList.getFirst()); //sets the first as the highest automatically
 
 			for(Vehicle vehicle : vehicleList  ) //goes through entire arrL
 			{
@@ -285,7 +285,28 @@ ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep trac
 		//with the same lowest fuel efficiency
 		public ArrayList<Vehicle> getVehicleWithLowestFuelEfficiency(double distance, double fuelPrice)
 		{
-			return null;
+			ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep track of the cars with highest fuel efficiency
+			
+			tempArrL.add(vehicleList.getFirst()); //sets the first as the lowest automatically
+
+			for(Vehicle vehicle : vehicleList  ) //goes through entire arrL
+			{
+				System.out.println(vehicle.calculateFuelEfficiency(distance, fuelPrice));
+				if(vehicle.calculateFuelEfficiency(distance, fuelPrice) < tempArrL.getFirst().calculateFuelEfficiency(distance, fuelPrice) )
+				{ //if the vehicle FuelE is lower than the vehicle in the tempArrL FuelE it will clear the
+					// ArrL and add the new vehicle as the lowest FuelE
+					
+					tempArrL.removeAll(tempArrL);
+					tempArrL.add(vehicle);
+				}
+				if(vehicle.calculateFuelEfficiency(distance, fuelPrice) == tempArrL.getFirst().calculateFuelEfficiency(distance, fuelPrice))
+				{ //if multiple cars have the same FuelE it will add it to the Arrl
+					tempArrL.add(vehicle);
+				}
+				
+			}
+			
+			return tempArrL;
 		}
 		
 		//calculates and returns the average fuel efficiency of all SUVs in the vehicle list
