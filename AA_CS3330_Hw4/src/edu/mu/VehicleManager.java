@@ -182,21 +182,50 @@ public class VehicleManager {
 		        return false;//if not found it will return false
 		    }
 		}
+		public boolean addVehicle(Vehicle vehicle) {
+	        // Add the vehicle to the vehicleList
+	        boolean isAdded = vehicleList.add(vehicle);
+	        
+	        // Return true if the addition is successful, false otherwise
+	        return isAdded;
+	    }
+		
+		public boolean saveVehicleList() {
+	        // Check if the vehicleList is empty
+	        if (vehicleList.isEmpty()) {
+	            return false; // Return false if the list is empty
+	        }
 
-	
-	
-			public <T extends Vehicle> void print(ArrayList<T> vehicle) {
+	        
+	            for (Vehicle vehicle : vehicleList) {
+	                // Write each vehicle's data to the file
+	                writer.write(vehicle.toCSVFormat()); // Assuming toCSVFormat() returns a CSV representation of the vehicle
+	                writer.newLine();
+	            }
+	          }
+	        private boolean isVehicleType(Vehicle v, Class<?> clazz) {
+	            // Use instanceof to check if the given vehicle is an instance of the specified class
+	            return clazz.isInstance(v);
+	        }
+	        public int getNumberOfVehiclesByType(Class<?> clazz) {
+	            int count = 0;
+	            for (Vehicle vehicle : vehicleList) {
+	            	if (isVehicleType(vehicle, clazz)) {
+	                    count++;
+	                }
+	            }
+
+	            return count;
+	        }
+	        public <T extends Vehicle> void print(ArrayList<T> vehicle) {
 				int i = 1;
 				for(Vehicle temp : vehicle) {
-					String info = temp.toString(); //very easy because we use toString method that we implemented in each class
-					System.out.println(i + ") " + info);  //use a counter to see how many products are in the list
+					String info = temp.toString(); 
+					System.out.println(i + ") " + info);  
 					i++;
 				}
 			
 			}
-	
-	
-	
-	}
+	        }
 
 
