@@ -3,6 +3,7 @@ package edu.mu;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import edu.mu.vehicles.*;
@@ -182,6 +183,155 @@ public class VehicleManager {
 		        return false;//if not found it will return false
 		    }
 		}
+		
+		//calculates the maintenance cost of all vehicles in the fleet
+		//returns the vehicle with the highest maintenance cost
+		//if multiple cars have the same highest maintenance cost it will randomly pick 1 to return
+		public Vehicle getVehicleWithHighestMaintenanceCost(double distance)
+		{
+			ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep track of the cars with highest maint cost
+			
+			tempArrL.add(vehicleList.getFirst()); //sets the first as the highest automatically
+			
+			
+			for(Vehicle vehicle : vehicleList  ) //goes through entire arrL
+			{
+				
+				if(vehicle.calculateMaintenaceCost(distance) > tempArrL.getFirst().calculateMaintenaceCost(distance) )
+				{ //if the vehicle maint is higher than the vehicle in the tempArrL maint it will clear the
+					// ArrL and add the new vehicle as the highest maint cost
+					
+					tempArrL.removeAll(tempArrL);
+					tempArrL.add(vehicle);
+				}
+				if(vehicle.calculateMaintenaceCost(distance) == tempArrL.getFirst().calculateMaintenaceCost(distance))
+				{ //if multiple cars have the same maint cost it will add it to the Arrl
+					tempArrL.add(vehicle);
+				}
+				
+			}
+			
+			Random rndm = new Random();
+			
+			Vehicle rtVehicle = tempArrL.get(rndm.nextInt(tempArrL.size())); //chooses randomly one of the cars in the ArrL to return
+			
+			return rtVehicle;
+		}
+		
+		//calculates the maintenance cost of all vehicles in the fleet
+		//returns the vehicle with the lowest maintenance cost
+		//if multiple cars have the same lowest maintenance cost it will randomly pick 1 to return
+		public Vehicle getVehicleWithLowestMaintenanceCost(double distance)
+		{
+ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep track of the cars with highest maint cost
+			
+			tempArrL.add(vehicleList.getFirst()); //sets the first as the lowest automatically
+			
+			
+			for(Vehicle vehicle : vehicleList  ) //goes through entire arrL
+			{
+				
+				if(vehicle.calculateMaintenaceCost(distance) < tempArrL.getFirst().calculateMaintenaceCost(distance) )
+				{ //if the vehicle maint is lower than the vehicle in the tempArrL maint it will clear the
+					// ArrL and add the new vehicle as the lowest maint cost
+					
+					tempArrL.removeAll(tempArrL);
+					tempArrL.add(vehicle);
+				}
+				if(vehicle.calculateMaintenaceCost(distance) == tempArrL.getFirst().calculateMaintenaceCost(distance))
+				{ //if multiple cars have the same maint cost it will add it to the Arrl
+					tempArrL.add(vehicle);
+				}
+				
+			}
+			
+			Random rndm = new Random();
+			
+			Vehicle rtVehicle = tempArrL.get(rndm.nextInt(tempArrL.size())); //chooses randomly one of the cars in the ArrL to return
+			
+			return rtVehicle;
+		}
+			
+		// finds the car with the highest fuel efficiency
+		//returns an arraylist of either the vehicle with the highest fuel efficiency of an arraylist of the all the vehicles
+		//with the same highest fuel efficiency
+		public ArrayList<Vehicle> getVehicleWithHighestFuelEfficiency(double distance, double fuelPrice)
+		{
+			ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep track of the cars with highest fuel efficiency
+	
+			tempArrL.add(vehicleList.getFirst()); //sets the first as the highest automatically
+
+			for(Vehicle vehicle : vehicleList  ) //goes through entire arrL
+			{
+				if(vehicle.calculateFuelEfficiency(distance, fuelPrice) > tempArrL.getFirst().calculateFuelEfficiency(distance, fuelPrice) )
+				{ //if the vehicle FuelE is higher than the vehicle in the tempArrL FuelE it will clear the
+					// ArrL and add the new vehicle as the highest FuelE
+					
+					tempArrL.removeAll(tempArrL);
+					tempArrL.add(vehicle);
+				}
+				if(vehicle.calculateFuelEfficiency(distance, fuelPrice) == tempArrL.getFirst().calculateFuelEfficiency(distance, fuelPrice))
+				{ //if multiple cars have the same FuelE it will add it to the Arrl
+					tempArrL.add(vehicle);
+				}
+				
+			}
+			
+			return tempArrL;
+		}
+			
+		// finds the car with the lowest fuel efficiency
+		//returns an arraylist of either the vehicle with the lowest fuel efficiency of an arraylist of the all the vehicles
+		//with the same lowest fuel efficiency
+		public ArrayList<Vehicle> getVehicleWithLowestFuelEfficiency(double distance, double fuelPrice)
+		{
+			ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep track of the cars with highest fuel efficiency
+			
+			tempArrL.add(vehicleList.getFirst()); //sets the first as the lowest automatically
+
+			for(Vehicle vehicle : vehicleList  ) //goes through entire arrL
+			{
+				
+				if(vehicle.calculateFuelEfficiency(distance, fuelPrice) < tempArrL.getFirst().calculateFuelEfficiency(distance, fuelPrice) )
+				{ //if the vehicle FuelE is lower than the vehicle in the tempArrL FuelE it will clear the
+					// ArrL and add the new vehicle as the lowest FuelE
+					
+					tempArrL.removeAll(tempArrL);
+					tempArrL.add(vehicle);
+				}
+				if(vehicle.calculateFuelEfficiency(distance, fuelPrice) == tempArrL.getFirst().calculateFuelEfficiency(distance, fuelPrice))
+				{ //if multiple cars have the same FuelE it will add it to the Arrl
+					tempArrL.add(vehicle);
+				}
+				
+			}
+			
+			return tempArrL;
+		}
+		
+		//calculates and returns the average fuel efficiency of all SUVs in the vehicle list
+		public double getAverageFuelEfficiencyOfSUVs(double distance, double fuelPrice)
+		{
+			
+			double totalSUVFuelE = 0; //make double to store avg fuelE
+			int SUVCount = 0; // count on how many SUVs
+			
+			for(Vehicle vehicle : vehicleList) //goes through each Vehicle
+			{
+				if(vehicle instanceof SUV) //if the vehicle is an suv
+				{
+					SUVCount++; //adds to the count
+					totalSUVFuelE += vehicle.calculateFuelEfficiency(distance, fuelPrice); //adds fuelE to the running total
+					 
+				}
+			}
+			
+			double avgSUVFuelE = totalSUVFuelE / SUVCount;
+			
+			return avgSUVFuelE; //returns the average 
+		}
+
+
 
 	
 	
