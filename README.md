@@ -13,7 +13,7 @@ Each member was expected to contribute as equally as possible.
 
 Connor Joyce set up the Github repository, initializes all files, and generated all basic methods such as the constructors, setters, and getters. He also was in charge of building methods 1-4 in the Vehicle manager class
 
-Drew Distler was assigned to do methods 13 - 17 of the vehicle manager class, and responsible for creating the ReadME file
+Drew Distler was assigned to do methods 13 - 17 of the vehicle manager class,responsible for creating the ReadME file, and responsible for adding the fuel efficiency and maintenance cost to the display functions.
 
 Colin Buchhiet was assigined to do methods 5-8 of the vehicle manager class
 
