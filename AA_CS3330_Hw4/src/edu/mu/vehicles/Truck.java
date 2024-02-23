@@ -1,18 +1,22 @@
 package edu.mu.vehicles;
 
+import java.time.Year;
+
 import edu.mu.FuelType;
 import edu.mu.StartMechanism;
 import edu.mu.VehicleColor;
 
 public class Truck extends Vehicle{
+	protected Year year = Year.now();
+	protected double currentYear = year.getValue();
 
 	//default constructor
 	public Truck() {
 		
 	}
 	//super constructor
-	public Truck(String brand, String make, long modelYear, Double price, VehicleColor color, 
-			FuelType fuelType, Double mileage, Double mass, int cylinders, Double gasTankCapacity, StartMechanism startType) {
+	public Truck(String brand, String make, long modelYear, double price, VehicleColor color, 
+			FuelType fuelType, double mileage, double mass, int cylinders, double gasTankCapacity, StartMechanism startType) {
 		super(brand, make, modelYear, price, color, fuelType, mileage, mass, cylinders, gasTankCapacity, startType);
 	}
 	
@@ -48,7 +52,7 @@ public class Truck extends Vehicle{
 		}
 		@Override
 		public double calculateMaintenaceCost(double distance) {
-			return (distance * mass * (2024-modelYear) * cylinders * .002);
+			return (distance * mass * (currentYear-modelYear) * cylinders * .002);
 			
 		}
 		@Override
