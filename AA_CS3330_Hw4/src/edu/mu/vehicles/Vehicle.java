@@ -1,5 +1,6 @@
 package edu.mu.vehicles;
 
+
 import edu.mu.*;
 
 public abstract class Vehicle {
@@ -15,14 +16,15 @@ public abstract class Vehicle {
 	protected int cylinders;
 	protected Double gasTankCapacity;
 	protected StartMechanism startType;
+	
 
 	//default constructor
 	public Vehicle() {
 		
 	}
 	//parameterized constructor
-	public Vehicle(String brand, String make, long modelYear, Double price, VehicleColor color, 
-			FuelType fuelType, Double mileage, Double mass, int cylinders, Double gasTankCapacity, StartMechanism startType) {
+	public Vehicle(String brand, String make, long modelYear, double price, VehicleColor color, 
+			FuelType fuelType, double mileage, double mass, int cylinders, double gasTankCapacity, StartMechanism startType) {
 		this.brand =  brand;
 		this.make = make;
 		this.modelYear = modelYear;

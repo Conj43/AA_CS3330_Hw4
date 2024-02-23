@@ -1,15 +1,13 @@
 package edu.mu;
 
-import java.util.ArrayList;
-
-import edu.mu.vehicles.Vehicle;
+import edu.mu.vehicles.*;
 
 public class Main {
 
 	public static void main(String[] args) {
 		VehicleManager manager = new VehicleManager();
 		
-		boolean value = manager.readFromFile(manager.vehicleFilePath);
+		boolean value = manager.readFromFile();
 		
 		System.out.println(value);
 		
@@ -38,6 +36,19 @@ public class Main {
 		System.out.println("vehicle with the lowest fuel efficiency = " +manager.getVehicleWithLowestFuelEfficiency(100, 2.0));
 		
 		System.out.println("average SUV fuel efficiency = " + manager.getAverageFuelEfficiencyOfSUVs(100, 2.0));
+		
+//		VehicleColor color = VehicleColor.RED;
+//		FuelType fuel = FuelType.GASOLINE;
+//		StartMechanism start = StartMechanism.KEYSTART;
+		
+		
+//		Truck newTruck = new Truck("Chevy", "Silverado", 2016, 999, color, fuel, 123, 2.1, 21, 50, start);
+//		manager.addVehicle(newTruck);
+//		
+//		manager.saveVehicleList();
+		
+		
+		
 	}
 	
 

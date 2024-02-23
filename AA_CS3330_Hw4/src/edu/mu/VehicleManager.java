@@ -2,36 +2,34 @@ package edu.mu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+
 
 import edu.mu.vehicles.*;
 
 //connor-branch creation
 public class VehicleManager {
 	
-	final String vehicleFilePath = "files/vehicleList.csv";
+	private final static String vehicleFilePath = "files/vehicleList.csv";
 	public ArrayList<Vehicle> vehicleList;
 	private final static double distance = 300;
 	private final static double fuelPrice = 3.25;
-	
+
 	
 	//default constructor
 	public VehicleManager() {
 		
 	}
 	
-	//definition of this on assignment doesn't make sense
-	//it is supposed to be constructor, but it is displayed as public void VehicleManager(String fileName) which would be a method
-	//also, you can't access the vehicleFilePath unless you have already made a vehicle manager object, so this confuses me
-	public VehicleManager(String fileName) {
-		readFromFile(fileName);
-	}
+	
 
 
 	
-	public boolean readFromFile(String fileName) {
+	public boolean readFromFile() {
 		boolean value = false; //creating return value
 		File inventoryFile = new File(vehicleFilePath); //creating file pointing to file path
 		vehicleList = new ArrayList<>(); //initialize vehicle list
@@ -63,7 +61,7 @@ public class VehicleManager {
 			
 			
 			if(splitString[0].equals("Truck")) { //look at first row to see which type of vehicle we need to make
-				Truck newTruck = new Truck(splitString[1], splitString[2], modelYear, price, color, fuel, mileage, mass, cylinders, gasTankCapacity, type);
+				Truck newTruck = new Truck(splitString[1], splitString[2], modelYear, price, color, fuel, mileage, mass, cylinders, gasTankCapacity, type); //use variables we made to create new vehicle
 				vehicleList.add(newTruck);
 			}
 			else if(splitString[0].equals("Car")) {
@@ -153,7 +151,7 @@ public class VehicleManager {
 		public void displayAllMotorBikeInformation() {
 			int count = 0;
 			for(Vehicle vehicle : vehicleList) { //loops through
-				if(vehicle instanceof MotorBike) { //checks if current vehicle is instance of a Motorbike
+				if(vehicle instanceof MotorBike) { //checks if current vehicle is instance of a Motor bike
 					String temp = vehicle.toString(); //use to string to display information
 					double fuelE = vehicle.calculateFuelEfficiency(distance, fuelPrice);
 					double maintCost = vehicle.calculateMaintenaceCost(distance);
@@ -162,9 +160,10 @@ public class VehicleManager {
 				}
 			}
 			if(count == 0) {
-				System.out.println("Error! There were no Motor Bikes Found!"); //print error if no Motorbikes found
+				System.out.println("Error! There were no Motor Bikes Found!"); //print error if no Motor bikes found
 			}
 		}
+		
 		
 		public void displayVehicleInformation(Vehicle v) {
 		    String temp = v.toString(); //get string representation of the vehicle
@@ -178,18 +177,22 @@ public class VehicleManager {
 			
 		public void displayAllVehicleInformation() {
 		    if (vehicleList.isEmpty()) {
-		        System.out.println("No vehicles found in the inventory.");
+		        System.out.println("No vehicles found in the inventory."); //display this message if empty
 		    } else {
 		        for (Vehicle vehicle : vehicleList) {
-		        	double fuelE = vehicle.calculateFuelEfficiency(distance, fuelPrice);
+
+		        double fuelE = vehicle.calculateFuelEfficiency(distance, fuelPrice);
 					double maintCost = vehicle.calculateMaintenaceCost(distance);
 					String temp = vehicle.toString();
 					System.out.println(temp +" Fuel Efficiency=" +fuelE +", Maintanence Cost=" +maintCost); //use to string to print out info
+
+		            System.out.println(vehicle.toString()); //print out each vehicle using to string
+
 		        }
 		    }
 		}
 
-		public boolean removeVehicle(Vehicle vehicle) { //checks the list of vehicls to see if it contains the speciic vehicle
+		public boolean removeVehicle(Vehicle vehicle) { //checks the list of vehicles to see if it contains the specific vehicle
 		    if (vehicleList.contains(vehicle)) {
 		        vehicleList.remove(vehicle); //if it is found it will remove the vehicle
 		        return true;//returns true if correctly removed
@@ -198,6 +201,45 @@ public class VehicleManager {
 		        return false;//if not found it will return false
 		    }
 		}
+
+		public boolean addVehicle(Vehicle vehicle) {
+	        // Add the vehicle to the vehicleList
+	        boolean isAdded = vehicleList.add(vehicle);
+	        
+	        // Return true if the addition is successful, false otherwise
+	        return isAdded;
+	    }
+		
+		public boolean saveVehicleList() {
+		    try (FileWriter writer = new FileWriter(vehicleFilePath)) { //opens a file writer to write data to the file
+		    	writer.write("Type," + "Model," + "Make," + "ModelYear," + "Price," + "Color," + "FuelType," + "Mileage," + "Mass," + "Cylinders," + "GasTankCapacity," + "StartType"+ "\n"); //need to account for first row of labels
+		        for (Vehicle vehicle : vehicleList) 
+	          {    
+		        	String type = ""; //find which type in order to correctly assign it
+		        	if(vehicle instanceof Truck) {
+		        		type = "Truck";
+		        	}
+		        	else if(vehicle instanceof MotorBike) {
+		        		type = "MotorBike";
+		        	}
+		        	else if(vehicle instanceof Car) {
+		        		type = "Car";
+		        	}
+		        	else if(vehicle instanceof SUV) {
+		        		type = "SUV";
+		        	}
+		        	else type = "none";
+	              writer.write(type + "," + vehicle.getBrand() + "," + vehicle.getMake() + "," + vehicle.getModelYear() + "," + vehicle.getPrice() + "," + vehicle.getColor() + "," + vehicle.getFuelType() + "," + 
+	            		  vehicle.getMileage() + "," + vehicle.getMass() + "," + vehicle.getCylinders() + "," + vehicle.getGasTankCapacity() + "," + vehicle.getStartType()  + "\n");
+		        }
+		        return true;
+		    } catch (IOException e) //exception handle
+	      { 
+	          e.printStackTrace();
+		        return false;
+		    }
+		}
+
 		
 		//calculates the maintenance cost of all vehicles in the fleet
 		//returns the vehicle with the highest maintenance cost
@@ -238,7 +280,7 @@ public class VehicleManager {
 		//if multiple cars have the same lowest maintenance cost it will randomly pick 1 to return
 		public Vehicle getVehicleWithLowestMaintenanceCost(double distance)
 		{
-ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep track of the cars with highest maint cost
+			ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep track of the cars with highest maint cost
 			
 			tempArrL.add(vehicleList.getFirst()); //sets the first as the lowest automatically
 			
@@ -348,20 +390,38 @@ ArrayList <Vehicle> tempArrL = new ArrayList<Vehicle>(); //new ArrL to keep trac
 
 
 
-	
-	
-			public <T extends Vehicle> void print(ArrayList<T> vehicle) {
+
+	        
+	            
+	        private boolean isVehicleType(Vehicle v, Class<? extends Vehicle> clazz) { //use this type so we can pass in different subclasses of vehicle
+	            // Use instance of to check if the given vehicle is an instance of the specified class
+	        	boolean value = clazz.isInstance(v);
+	            return value;
+	        }
+	        
+	        
+	        
+	        public int getNumberOfVehiclesByType(Class<? extends Vehicle> clazz) { //use this type so we can pass in different subclasses of vehicle
+	            int count = 0;
+	            for (Vehicle vehicle : vehicleList) {
+	            	if (isVehicleType(vehicle, clazz)) { //use our function we made to check if it is of the specific type
+	                    count++;
+	                }
+	            }
+
+	            return count; //returns 0 if empty
+	        }
+	        
+	        //helper function that prints an array list of any type
+	        public <T extends Vehicle> void print(ArrayList<T> vehicle) {
 				int i = 1;
 				for(Vehicle temp : vehicle) {
-					String info = temp.toString(); //very easy because we use toString method that we implemented in each class
-					System.out.println(i + ") " + info);  //use a counter to see how many products are in the list
+					String info = temp.toString(); 
+					System.out.println(i + ") " + info);  
 					i++;
 				}
 			
 			}
-	
-	
-	
-	}
+	        }  
 
 
