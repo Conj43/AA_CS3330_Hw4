@@ -18,6 +18,7 @@ public class VehicleManager {
 	public ArrayList<Vehicle> vehicleList;
 	private final static double distance = 300;
 	private final static double fuelPrice = 3.25;
+
 	
 	//default constructor
 	public VehicleManager() {
@@ -100,7 +101,9 @@ public class VehicleManager {
 		for(Vehicle vehicle : vehicleList) {
 			if(vehicle instanceof Car) { //look for an instance of Car
 				String temp = vehicle.toString();
-				System.out.println(temp); //use to string to print out info
+				double fuelE = vehicle.calculateFuelEfficiency(distance, fuelPrice);
+				double maintCost = vehicle.calculateMaintenaceCost(distance);
+				System.out.println(temp +" Fuel Efficiency=" +fuelE +", Maintanence Cost=" +maintCost); //use to string to print out info
 				count++; //increment, so we know we have found at least one car
 			}
 		}
@@ -114,7 +117,9 @@ public class VehicleManager {
 		for(Vehicle vehicle : vehicleList) {
 			if(vehicle instanceof Truck) {
 				String temp = vehicle.toString(); //use to string to display all information
-				System.out.println(temp);
+				double fuelE = vehicle.calculateFuelEfficiency(distance, fuelPrice);
+				double maintCost = vehicle.calculateMaintenaceCost(distance);
+				System.out.println(temp +" Fuel Efficiency=" +fuelE +", Maintanence Cost=" +maintCost); //use to string to print out info
 				count++; //increment so we know we found a truck
 			}
 		}
@@ -130,7 +135,9 @@ public class VehicleManager {
 		for(Vehicle vehicle : vehicleList) { //loops through
 			if(vehicle instanceof SUV) { //checks if current vehicle is instance of SUV
 				String temp = vehicle.toString(); //use to string to display information
-				System.out.println(temp);
+				double fuelE = vehicle.calculateFuelEfficiency(distance, fuelPrice);
+				double maintCost = vehicle.calculateMaintenaceCost(distance);
+				System.out.println(temp +" Fuel Efficiency=" +fuelE +", Maintanence Cost=" +maintCost); //use to string to print out info
 				count++; //update so we know we found a SUV
 			}
 		}
@@ -146,7 +153,9 @@ public class VehicleManager {
 			for(Vehicle vehicle : vehicleList) { //loops through
 				if(vehicle instanceof MotorBike) { //checks if current vehicle is instance of a Motor bike
 					String temp = vehicle.toString(); //use to string to display information
-					System.out.println(temp);
+					double fuelE = vehicle.calculateFuelEfficiency(distance, fuelPrice);
+					double maintCost = vehicle.calculateMaintenaceCost(distance);
+					System.out.println(temp +" Fuel Efficiency=" +fuelE +", Maintanence Cost=" +maintCost); //use to string to print out info
 					count++; //update so we know we found a Motor Bike
 				}
 			}
@@ -159,8 +168,9 @@ public class VehicleManager {
 		public void displayVehicleInformation(Vehicle v) {
 		    String temp = v.toString(); //get string representation of the vehicle
 		    if (temp != null) {
-		        System.out.println(temp); //print the vehicle information
-		    } else {
+		    	double fuelE = v.calculateFuelEfficiency(distance, fuelPrice);
+				double maintCost = v.calculateMaintenaceCost(distance);
+				System.out.println(temp +" Fuel Efficiency=" +fuelE +", Maintanence Cost=" +maintCost); //use to string to print out info		    } else {
 		        System.out.println("Error! Vehicle not found.");
 		    }
 		}
@@ -170,7 +180,14 @@ public class VehicleManager {
 		        System.out.println("No vehicles found in the inventory."); //display this message if empty
 		    } else {
 		        for (Vehicle vehicle : vehicleList) {
+
+		        double fuelE = vehicle.calculateFuelEfficiency(distance, fuelPrice);
+					double maintCost = vehicle.calculateMaintenaceCost(distance);
+					String temp = vehicle.toString();
+					System.out.println(temp +" Fuel Efficiency=" +fuelE +", Maintanence Cost=" +maintCost); //use to string to print out info
+
 		            System.out.println(vehicle.toString()); //print out each vehicle using to string
+
 		        }
 		    }
 		}
