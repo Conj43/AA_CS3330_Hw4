@@ -1,17 +1,22 @@
 package edu.mu.vehicles;
 
+import java.time.Year;
+
 import edu.mu.FuelType;
 import edu.mu.StartMechanism;
 import edu.mu.VehicleColor;
 
 public class SUV extends Vehicle{
+	protected Year year = Year.now();
+	protected double currentYear = year.getValue();
 	//default constructor
 	public SUV() {
 		
+		
 	}
 	//super constructor
-			public SUV(String brand, String make, long modelYear, Double price, VehicleColor color, 
-					FuelType fuelType, Double mileage, Double mass, int cylinders, Double gasTankCapacity, StartMechanism startType) {
+			public SUV(String brand, String make, long modelYear, double price, VehicleColor color, 
+					FuelType fuelType, double mileage, double mass, int cylinders, double gasTankCapacity, StartMechanism startType) {
 				super(brand, make, modelYear, price, color, fuelType, mileage, mass, cylinders, gasTankCapacity, startType);
 			}
 			
@@ -41,7 +46,7 @@ public class SUV extends Vehicle{
 				}
 				@Override
 				public double calculateMaintenaceCost(double distance) {
-					return (distance * mass * (2024-modelYear) * cylinders * .001);
+					return (distance * mass * (currentYear-modelYear) * cylinders * .001);
 					
 				}
 				@Override
